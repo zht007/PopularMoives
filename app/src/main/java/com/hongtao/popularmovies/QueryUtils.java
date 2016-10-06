@@ -74,7 +74,8 @@ public final class QueryUtils {
                 String synopis = movie.getString("overview");
                 double userRating = movie.getDouble("vote_average");
                 String releaseDate = movie.getString("release_date");
-                movies.add(new Movie(title, poster_path, synopis,userRating,releaseDate));
+                double popularity = movie.getDouble("popularity");
+                movies.add(new Movie(title, poster_path, synopis,userRating,releaseDate,popularity));
 
             }
 
@@ -90,7 +91,7 @@ public final class QueryUtils {
 
         // Return the list of movies
 
-        Log.v(QueryUtils.class.getName(),"fetchEathquakeData()");
+        Log.v(QueryUtils.class.getName(),"fetchPopularMoviesData()");
         return movies;
     }
 

@@ -5,8 +5,10 @@
     tools:context="com.hongtao.popularmovies.MainFragment">
 
     <!-- TODO: Update blank fragment layout -->
-<ImageView
+<GridView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/imageView"/>
+    android:numColumns="2"
+    android:id="@+id/movies_gridview">
+</GridView>
 </FrameLayout>
