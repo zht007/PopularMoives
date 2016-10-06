@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by hongtao on 05/10/2016.
  */
 
-public class Movie implements Serializable {
+public class Movie implements Serializable{
     private String mTitle;
     private String mPosterPath;
     private String mSynopsis;

@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+
+
+    <!-- Strings related to Settings -->
+
+    <string-array name="pref_ordered_by_list_titles">
+        <item>Most Popular</item>
+        <item>Top Rated</item>
+    </string-array>
+    <string-array name="pref_ordred_by_list_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+
+    <!--  settings  -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="no_Internet">No Internet connected.</string>
+
+
+    <string name="pref_title_ordered_by">Ordered By</string>
+
+    <!-- Value in SharedPreferences ordered by popularity option [CHAR LIMIT=NONE] -->
+    <string name="pref_ordered_by_popularity" translatable="false">0</string>
+    <!-- Value in SharedPreferences ordered by ratings option [CHAR LIMIT=NONE] -->
+    <string name="pref_ordered_by_ratings" translatable="false">1</string>
+
+    <string name="key_orded_by_list">ordered_by</string>
+</resources>

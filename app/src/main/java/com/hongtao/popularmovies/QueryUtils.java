@@ -1,5 +1,6 @@
 package com.hongtao.popularmovies;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -16,6 +17,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import static android.media.CamcorderProfile.get;
 
 /**
  * Created by hongtao on 05/10/2016.
@@ -41,8 +46,9 @@ public final class QueryUtils {
      * Return a list of {@link Movie} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<Movie> extractMovies() {
+    public static ArrayList<Movie> extractMovies(Context context,String orderedBy,String url) {
 
+//        Log.v(LOG_TAG,url);
 
         //Delay for 2 seconds
 //        try {
@@ -65,7 +71,7 @@ public final class QueryUtils {
 
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of movie objects with the corresponding data.
-            JSONObject jsonObject = new JSONObject(makeHttpRequest(createUrl(TEST_URL)));
+            JSONObject jsonObject = new JSONObject(makeHttpRequest(createUrl(url)));
             JSONArray results = jsonObject.getJSONArray("results");
             for(int i = 0 ; i< results.length(); i++){
                 JSONObject movie = results.getJSONObject(i);
@@ -76,9 +82,23 @@ public final class QueryUtils {
                 String releaseDate = movie.getString("release_date");
                 double popularity = movie.getDouble("popularity");
                 movies.add(new Movie(title, poster_path, synopis,userRating,releaseDate,popularity));
+            }
+            //sort movies by ratings
+            if(orderedBy.equals(context.getString(R.string.pref_ordered_by_ratings))){
+                Collections.sort(movies, new Comparator<Movie>() {
+                    @Override
+                    public int compare(Movie one, Movie another) {
+                        int result;
+                        if(another.getUserRating() > one.getUserRating()){
+                            result = 1;
+                        }
+                        else result = -1;
+
+                        return result;
+                    }
+                });
 
             }
-
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
@@ -91,7 +111,7 @@ public final class QueryUtils {
 
         // Return the list of movies
 
-        Log.v(QueryUtils.class.getName(),"fetchPopularMoviesData()");
+//        Log.v(LOG_TAG,"fetchPopularMoviesData()");
         return movies;
     }
 
