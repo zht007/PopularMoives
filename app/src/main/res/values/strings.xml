@@ -30,4 +30,6 @@
     <string name="pref_ordered_by_ratings" translatable="false">1</string>
 
     <string name="key_orded_by_list">ordered_by</string>
+    <string name="ordered_by_popularity">Ordered by popularity</string>
+    <string name="ordered_by_ratings">Ordered by ratings</string>
 </resources>

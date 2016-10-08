@@ -30,7 +30,7 @@ public final class QueryUtils {
 
     private static String LOG_TAG = QueryUtils.class.getName();
 
-    private static String TEST_URL = "http://api.themoviedb.org/3/movie/popular?api_key=1b3a0ed2a58e5a9b9d72714537be6979";
+//    private static String TEST_URL = "http://api.themoviedb.org/3/movie/popular?api_key=1b3a0ed2a58e5a9b9d72714537be6979";
 
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
@@ -46,7 +46,7 @@ public final class QueryUtils {
      * Return a list of {@link Movie} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<Movie> extractMovies(Context context,String orderedBy,String url) {
+    public static ArrayList<Movie> extractMovies(Context context,String url) {
 
 //        Log.v(LOG_TAG,url);
 
@@ -84,21 +84,6 @@ public final class QueryUtils {
                 movies.add(new Movie(title, poster_path, synopis,userRating,releaseDate,popularity));
             }
             //sort movies by ratings
-            if(orderedBy.equals(context.getString(R.string.pref_ordered_by_ratings))){
-                Collections.sort(movies, new Comparator<Movie>() {
-                    @Override
-                    public int compare(Movie one, Movie another) {
-                        int result;
-                        if(another.getUserRating() > one.getUserRating()){
-                            result = 1;
-                        }
-                        else result = -1;
-
-                        return result;
-                    }
-                });
-
-            }
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,

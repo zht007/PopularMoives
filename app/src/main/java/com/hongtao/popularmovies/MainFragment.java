@@ -17,6 +17,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,15 +29,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.net.URL;
 import java.util.ArrayList;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-import static android.os.Build.VERSION_CODES.M;
-import static com.hongtao.popularmovies.QueryUtils.extractMovies;
-import static com.hongtao.popularmovies.R.id.imageView;
 
 
 /**
@@ -56,7 +52,9 @@ public class  MainFragment extends Fragment {
 
     private ProgressBar mProgressbar;
 
-    private final String POPULAR_MOVIES_BASE_URL = "http://api.themoviedb.org/3/movie/popular?";
+    private final String POPULAR_MOVIES_BASE_URL = "http://api.themoviedb.org/3/movie/";
+
+    private String mBaseUrl = POPULAR_MOVIES_BASE_URL+"popular?";
 
     public MainFragment() {
         // Required empty public constructor
@@ -65,11 +63,13 @@ public class  MainFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        updateMovies();
+        updateMovies(mBaseUrl);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
         //test internet connection.....
 
         ConnectivityManager cm =
@@ -80,6 +80,29 @@ public class  MainFragment extends Fragment {
                 activeNetwork.isConnectedOrConnecting();
 
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_fragment,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_ordered_by_popularity){
+            mBaseUrl = POPULAR_MOVIES_BASE_URL+"popular?";
+            updateMovies(mBaseUrl);
+
+        }
+
+        if(id == R.id.action_ordered_by_ratings){
+            mBaseUrl = POPULAR_MOVIES_BASE_URL+"top_rated?";
+            updateMovies(mBaseUrl);
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -111,7 +134,7 @@ public class  MainFragment extends Fragment {
         mEmptyStateView = (TextView)rootView.findViewById(R.id.empty_view);
         movieGridView.setEmptyView(mEmptyStateView);
 
-        updateMovies();
+        updateMovies(mBaseUrl);
         mProgressbar = (ProgressBar)rootView.findViewById(R.id.loading_spinner);
 
 
@@ -123,7 +146,7 @@ public class  MainFragment extends Fragment {
     public class FetchMovieTask extends AsyncTask<String,Void,ArrayList<Movie>>{
         @Override
         protected ArrayList<Movie> doInBackground(String... param) {
-            ArrayList<Movie> movies = QueryUtils.extractMovies(getContext(),param[0],param[1]);
+            ArrayList<Movie> movies = QueryUtils.extractMovies(getContext(),param[0]);
 //            for(int i=0; i< movies.size(); i++){
 //                Log.v(LOG_TAG,movies.get(i).getTitle());
 //            }
@@ -145,16 +168,36 @@ public class  MainFragment extends Fragment {
         }
     }
 
-    private void updateMovies(){
-
-        Uri buitUri = Uri.parse(POPULAR_MOVIES_BASE_URL).buildUpon()
-                .appendQueryParameter("api_key", BuildConfig.THE_MOVIE_DB_API_KEY).build();
-        String url = buitUri.toString();
+    private void updateMovies(String baseUrl){
 
         FetchMovieTask task = new FetchMovieTask();
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String orderedBy = sharedPrefs.getString(getString(R.string.key_orded_by_list), getString(R.string.pref_ordered_by_popularity));
-        task.execute(orderedBy,url);
+
+//        String baseUrl;
+//        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        String orderedBy = sharedPrefs.getString(getString(R.string.key_orded_by_list), getString(R.string.pref_ordered_by_popularity));
+//        if(orderedBy.equals(getString(R.string.pref_ordered_by_ratings))){
+//             baseUrl = POPULAR_MOVIES_BASE_URL+"top_rated?";
+//        }
+//        else {
+//            baseUrl = POPULAR_MOVIES_BASE_URL+"popular?";
+//        }
+        Uri buitUri = Uri.parse(baseUrl).buildUpon()
+                .appendQueryParameter("api_key", BuildConfig.THE_MOVIE_DB_API_KEY).build();
+        String url = buitUri.toString();
+        task.execute(url);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("BaseUrl", mBaseUrl);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            mBaseUrl = savedInstanceState.getString("BaseUrl");
+        }
+    }
 }

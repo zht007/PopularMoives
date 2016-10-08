@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp"
-    android:orientation="vertical"
-    android:gravity="center"
     tools:context="com.hongtao.popularmovies.DetailActivity">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent">
 
     <TextView
+        android:padding="12dp"
         tools:text="title"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        style="@style/tile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title_textview"
-        android:layout_weight="1" />
+        android:id="@+id/title_textview" />
 
     <ImageView
+        android:padding="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/poster_imageview"
-        android:layout_weight="1" />
+        android:id="@+id/poster_imageview" />
 
     <TextView
+        android:padding="12dp"
         android:text="synopsis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/synopsis_textview"
-        android:layout_weight="1" />
+        android:id="@+id/synopsis_textview" />
 
     <TextView
+        android:padding="12dp"
         android:text="Rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rating_textview"
-        android:layout_weight="1" />
+        android:id="@+id/rating_textview" />
 
     <TextView
+        android:padding="12dp"
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/realese_date_textview"
-        android:layout_weight="1" />
+        android:id="@+id/realese_date_textview" />
+
 
 </LinearLayout>
+
+
+</ScrollView>
