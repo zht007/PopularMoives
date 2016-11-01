@@ -32,4 +32,7 @@
     <string name="key_orded_by_list">ordered_by</string>
     <string name="ordered_by_popularity">Ordered by popularity</string>
     <string name="ordered_by_ratings">Ordered by ratings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
