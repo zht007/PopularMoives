@@ -1,7 +1,6 @@
 package com.hongtao.popularmovies;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -17,10 +16,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import static android.media.CamcorderProfile.get;
 
 /**
  * Created by hongtao on 05/10/2016.

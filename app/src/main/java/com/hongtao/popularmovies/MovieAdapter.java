@@ -2,7 +2,6 @@ package com.hongtao.popularmovies;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import static android.R.attr.resource;
 import static com.hongtao.popularmovies.R.id.imageView;
 
 /**

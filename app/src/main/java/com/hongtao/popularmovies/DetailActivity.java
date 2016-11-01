@@ -1,8 +1,8 @@
 package com.hongtao.popularmovies;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +19,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();
-        Movie movie = (Movie)intent.getExtras().getSerializable("CURRENT_MOVIE");
+        Movie movie = intent.getParcelableExtra("CURRENT_MOVIE");
         Log.v(LOG_TAG,movie.getTitle());
 
         TextView titleTextView = (TextView) findViewById(R.id.title_textview);
