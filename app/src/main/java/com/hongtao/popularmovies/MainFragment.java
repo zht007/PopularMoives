@@ -133,8 +133,8 @@ public class  MainFragment extends Fragment {
 
         updateMovies(mBaseUrl);
         mProgressbar = (ProgressBar)rootView.findViewById(R.id.loading_spinner);
-
-        insertMovie();
+        //test db insert
+//        insertMovie();
 
 
         return rootView;
