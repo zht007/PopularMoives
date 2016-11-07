@@ -21,13 +21,14 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE" + MovieContract.MovieEnry.TABLE_NAME+ " (" +
-                MovieContract.MovieEnry._ID + " INTEGER PRIMARY KEY," +
-                MovieContract.MovieEnry.COLUMN_TITLE + " TEXT NOT NULL, " +
-                MovieContract.MovieEnry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
-                MovieContract.MovieEnry.COLUMN_SYNOPSIS + " TEXT NOT NULL, " +
-                MovieContract.MovieEnry.COLUMN_USER_RATING + " REAL NOT NULL, " +
-                MovieContract.MovieEnry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
+        final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE" + MovieContract.MovieEntry.TABLE_NAME+ " (" +
+                MovieContract.MovieEntry._ID + " INTEGER PRIMARY KEY," +
+                MovieContract.MovieEntry.COLUMN_MOVIE_ID + " INTEGER UNIQUE NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_SYNOPSIS + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_USER_RATING + " REAL NOT NULL, " +
+                MovieContract.MovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
                 ");";
 
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIE_TABLE);
@@ -35,7 +36,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + MovieContract.MovieEnry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + MovieContract.MovieEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 }
