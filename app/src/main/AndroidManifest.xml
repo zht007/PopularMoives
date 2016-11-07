@@ -33,6 +33,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hongtao.popularmovies.MainActivity" />
         </activity>
+        <provider
+            android:authorities="com.hongtao.popularmovies"
+            android:name=".data.MovieProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

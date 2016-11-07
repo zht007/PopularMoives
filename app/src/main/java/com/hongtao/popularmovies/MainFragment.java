@@ -1,7 +1,9 @@
 package com.hongtao.popularmovies;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,8 +24,12 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.hongtao.popularmovies.data.MovieContract;
+import com.hongtao.popularmovies.data.MovieDbHelper;
+
 import java.util.ArrayList;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 
 /**
@@ -82,18 +89,16 @@ public class  MainFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_ordered_by_popularity){
-            mBaseUrl = POPULAR_MOVIES_BASE_URL+"popular?";
-            updateMovies(mBaseUrl);
-
+        switch (id){
+            case R.id.action_ordered_by_popularity:
+                mBaseUrl = POPULAR_MOVIES_BASE_URL+"popular?";
+                updateMovies(mBaseUrl);
+                break;
+            case R.id.action_ordered_by_ratings:
+                mBaseUrl = POPULAR_MOVIES_BASE_URL+"top_rated?";
+                updateMovies(mBaseUrl);
+                break;
         }
-
-        if(id == R.id.action_ordered_by_ratings){
-            mBaseUrl = POPULAR_MOVIES_BASE_URL+"top_rated?";
-            updateMovies(mBaseUrl);
-
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -128,6 +133,8 @@ public class  MainFragment extends Fragment {
 
         updateMovies(mBaseUrl);
         mProgressbar = (ProgressBar)rootView.findViewById(R.id.loading_spinner);
+
+        insertMovie();
 
 
         return rootView;
@@ -191,5 +198,22 @@ public class  MainFragment extends Fragment {
         if (savedInstanceState != null) {
             mBaseUrl = savedInstanceState.getString("BaseUrl");
         }
+    }
+
+    private void insertMovie(){
+        ContentValues values = new ContentValues();
+        values.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID,5);
+        values.put(MovieContract.MovieEntry.COLUMN_TITLE,"title test");
+        values.put(MovieContract.MovieEntry.COLUMN_POSTER_PATH,"test_path");
+        values.put(MovieContract.MovieEntry.COLUMN_SYNOPSIS,"test_path");
+        values.put(MovieContract.MovieEntry.COLUMN_USER_RATING,2.2);
+        values.put(MovieContract.MovieEntry.COLUMN_RELEASE_DATE,"test date");
+
+//        MovieDbHelper dbHelper = new MovieDbHelper(getContext());
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        long newUri = db.insert(MovieContract.MovieEntry.TABLE_NAME,null,values);
+
+       Uri newUri = getContext().getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI,values);
+        Log.v(LOG_TAG, "the insert id = " + String.valueOf(newUri));
     }
 }
